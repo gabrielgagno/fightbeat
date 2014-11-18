@@ -1,0 +1,159 @@
+package ph.edu.uplb.cs137.client.view;
+
+import ph.edu.uplb.cs137.client.CommonUtil;
+import ph.edu.uplb.cs137.client.Music;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
+
+/**
+ * Created by Dell on 11/18/2014.
+ */
+public class GamePanel extends JPanel implements ActionListener, KeyListener{
+    private String serverName;
+    private String name;
+    private int canPress;
+    private int[] score;
+    private Timer timer;
+    private Music chosenMusic;
+    private int currentMusicIndex;
+
+    public GamePanel(String serverName, String name){
+        this.serverName = serverName;
+        this.name = name;
+        this.canPress = 0;
+        //this.keyCatcher = new KeyCatcher();
+        this.timer = new Timer(5, this);
+        int[] arr = new int[3];
+        arr[0] = 600;
+        arr[1] = 850;
+        arr[2] = 1000;
+        //this.addKeyListener(keyCatcher);
+        this.addKeyListener(this);
+        this.chosenMusic = new Music("music01.wav", "You and I Both", "Jason Mraz", "2003", 3, arr);
+        this.setPreferredSize(new Dimension(600, 500));
+        this.timer.start();
+        this.score = new int[this.chosenMusic.getNumMoves()];
+        for(int i=0;i<score.length;i++){
+            score[i] = -1;
+        }
+        this.setVisible(true);
+        this.setFocusable(true);
+    }
+    public void paint(Graphics g){
+        super.paint(g);
+        g.setColor(new Color(225, 182, 80));
+        g.fillRect(-1, 390, 600, 100);
+        g.setColor(new Color(82, 189, 255));
+        g.fillRect(275, 390, 50, 100);
+        g.setColor(new Color(34, 37, 255));
+        g.fillRect(298, 390, 5, 100);
+        if(canPress!=0){
+            g.setColor(new Color(255, 71, 54));
+            g.drawRect(275, 390, 50, 100);
+        }
+
+        try{
+            for(int i=0;i<this.chosenMusic.getArrowList().size();i++){
+                g.drawImage(ImageIO.read(new File("resources/img/" + this.chosenMusic.getArrowList().get(i) + ".png")), this.chosenMusic.getxCoordinates()[i], 420, this);
+            }
+            //g.drawImage(ImageIO.read(new File("resources/img/down.png")), 100, 420, this);
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+        g.dispose();
+    }
+
+    public void actionPerformed(ActionEvent e){
+        if(e.getSource()==timer){
+            for(int i=0;i<this.chosenMusic.getArrowList().size();i++){
+                this.chosenMusic.getxCoordinates()[i]--;
+                if(this.chosenMusic.getxCoordinates()[currentMusicIndex] < 275){
+                    if(score[currentMusicIndex] == -1){
+                        System.out.println("MISS");
+                        score[currentMusicIndex] = 0;
+                    }
+                    if(currentMusicIndex+1<this.chosenMusic.getArrowList().size()){
+                        currentMusicIndex++;
+                    }
+                }
+            }
+            repaint();
+        }
+    }
+
+    public void keyReleased(KeyEvent e){
+        if(e.getKeyCode() == KeyEvent.VK_UP){
+            if(canPress==1){
+                canPress=0;
+            }
+        }
+        else if(e.getKeyCode() == KeyEvent.VK_DOWN){
+            if(canPress==2){
+                canPress=0;
+            }
+        }
+        else if(e.getKeyCode() == KeyEvent.VK_LEFT){
+            if(canPress==3){
+                canPress=0;
+            }
+        }
+        else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+            if(canPress==4){
+                canPress=0;
+            }
+        }
+    }
+
+    public void keyTyped(KeyEvent e){
+
+    }
+
+    public void keyPressed(KeyEvent e){
+        int res = 0;
+        if(canPress==0){
+            if(e.getKeyCode() == KeyEvent.VK_UP){
+                System.out.println("UP!");
+                canPress = 1;
+                res = CommonUtil.checker(canPress, this.chosenMusic.getArrowList().get(currentMusicIndex), this.chosenMusic.getxCoordinates()[currentMusicIndex], this.score, currentMusicIndex);
+            }
+            else if(e.getKeyCode() == KeyEvent.VK_DOWN){
+                System.out.println("DOWN!");
+                canPress = 2;
+                res = CommonUtil.checker(canPress, this.chosenMusic.getArrowList().get(currentMusicIndex), this.chosenMusic.getxCoordinates()[currentMusicIndex], this.score, currentMusicIndex);
+            }
+            else if(e.getKeyCode() == KeyEvent.VK_LEFT){
+                System.out.println("LEFT!");
+                canPress = 3;
+                res = CommonUtil.checker(canPress, this.chosenMusic.getArrowList().get(currentMusicIndex), this.chosenMusic.getxCoordinates()[currentMusicIndex], this.score, currentMusicIndex);
+            }
+            else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+                System.out.println("RIGHT!");
+                canPress = 4;
+                res = CommonUtil.checker(canPress, this.chosenMusic.getArrowList().get(currentMusicIndex), this.chosenMusic.getxCoordinates()[currentMusicIndex], this.score, currentMusicIndex);
+            }
+        }
+    }
+    /*
+    private class KeyCatcher extends KeyAdapter{
+        public void keyTyped(KeyEvent e){
+            if(e.getKeyCode() == KeyEvent.VK_UP){
+                System.out.println("UP!");
+            }
+            else if(e.getKeyCode() == KeyEvent.VK_DOWN){
+                System.out.println("DOWN!");
+            }
+            else if(e.getKeyCode() == KeyEvent.VK_LEFT){
+                System.out.println("LEFT!");
+            }
+            else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+                System.out.println("RIGHT!");
+            }
+        }
+    }*/
+}
