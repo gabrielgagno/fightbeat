@@ -27,7 +27,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
         this.name = name;
         this.canPress = 0;
         //this.keyCatcher = new KeyCatcher();
-        this.timer = new Timer(5, this);
+        this.timer = new Timer(2, this);
         int[] arr = new int[3];
         arr[0] = 600;
         arr[1] = 850;
@@ -49,12 +49,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
         g.setColor(new Color(225, 182, 80));
         g.fillRect(-1, 390, 600, 100);
         g.setColor(new Color(82, 189, 255));
-        g.fillRect(275, 390, 50, 100);
+        g.fillRect(100, 390, 50, 100);
         g.setColor(new Color(34, 37, 255));
-        g.fillRect(298, 390, 5, 100);
+        g.fillRect(123, 390, 5, 100);
         if(canPress!=0){
             g.setColor(new Color(255, 71, 54));
-            g.drawRect(275, 390, 50, 100);
+            g.drawRect(100, 390, 50, 100);
         }
 
         try{
@@ -73,7 +73,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
         if(e.getSource()==timer){
             for(int i=0;i<this.chosenMusic.getArrowList().size();i++){
                 this.chosenMusic.getxCoordinates()[i]--;
-                if(this.chosenMusic.getxCoordinates()[currentMusicIndex] < 275){
+                if(this.chosenMusic.getxCoordinates()[currentMusicIndex] < 100){
                     if(score[currentMusicIndex] == -1){
                         System.out.println("MISS");
                         score[currentMusicIndex] = 0;

@@ -1,4 +1,5 @@
 package ph.edu.uplb.cs137.client;
+import java.io.File;
 import java.net.InetAddress;
 
 /**
@@ -12,6 +13,9 @@ public class NetPlayer {
 	private int port;
 	private String name;
 	private String msg;
+    private int health;
+    private int attack;
+    private File file;
 	public NetPlayer(String name,InetAddress address, int port){
 		this.address = address;
 		this.port = port;
