@@ -129,7 +129,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                 adj=13;
                 this.sprite.setCurrSonic(0);
                 this.sprite.setCurrLuffy(0);
-                dmg=(dmg+5)%170;
+                //dmg=(dmg+5)%170;
             }
         }
         else if(e.getKeyCode() == KeyEvent.VK_DOWN){
@@ -140,7 +140,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                 adj=13;
                 this.sprite.setCurrSonic(0);
                 this.sprite.setCurrLuffy(0);
-                dmg=(dmg+5)%170;
+                //dmg=(dmg+5)%170;
             }
         }
         else if(e.getKeyCode() == KeyEvent.VK_LEFT){
@@ -151,7 +151,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                 adj=13;
                 this.sprite.setCurrSonic(0);
                 this.sprite.setCurrLuffy(0);
-                dmg=(dmg+5)%170;
+                //dmg=(dmg+5)%170;
             }
         }
         else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
@@ -162,7 +162,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                 adj=13;
                 this.sprite.setCurrSonic(0);
                 this.sprite.setCurrLuffy(0);
-                dmg=(dmg+5)%170;
+
             }
         }
     }
@@ -178,21 +178,37 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                 System.out.println("UP!");
                 canPress = 1;
                 res = CommonUtil.checker(canPress, this.chosenMusic.getArrowList().get(currentMusicIndex), this.chosenMusic.getxCoordinates()[currentMusicIndex], this.score, currentMusicIndex);
+                if(res!=-1){
+                    dmg=(dmg+5)%170;
+                    res=-1;
+                }
             }
             else if(e.getKeyCode() == KeyEvent.VK_DOWN){
                 System.out.println("DOWN!");
                 canPress = 2;
                 res = CommonUtil.checker(canPress, this.chosenMusic.getArrowList().get(currentMusicIndex), this.chosenMusic.getxCoordinates()[currentMusicIndex], this.score, currentMusicIndex);
+                if(res!=-1){
+                    dmg=(dmg+5)%170;
+                    res=-1;
+                }
             }
             else if(e.getKeyCode() == KeyEvent.VK_LEFT){
                 System.out.println("LEFT!");
                 canPress = 3;
                 res = CommonUtil.checker(canPress, this.chosenMusic.getArrowList().get(currentMusicIndex), this.chosenMusic.getxCoordinates()[currentMusicIndex], this.score, currentMusicIndex);
+                if(res!=-1){
+                    dmg=(dmg+5)%170;
+                    res=-1;
+                }
             }
             else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
                 System.out.println("RIGHT!");
                 canPress = 4;
                 res = CommonUtil.checker(canPress, this.chosenMusic.getArrowList().get(currentMusicIndex), this.chosenMusic.getxCoordinates()[currentMusicIndex], this.score, currentMusicIndex);
+                if(res!=-1){
+                    dmg=(dmg+5)%170;
+                    res=-1;
+                }
             }
         }
     }
