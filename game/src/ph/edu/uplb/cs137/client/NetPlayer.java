@@ -12,6 +12,7 @@ public class NetPlayer {
 	private int port;
 	private String name;
 	private String msg;
+
 	public NetPlayer(String name,InetAddress address, int port){
 		this.address = address;
 		this.port = port;

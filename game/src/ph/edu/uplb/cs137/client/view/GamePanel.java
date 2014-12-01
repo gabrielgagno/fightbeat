@@ -2,6 +2,7 @@ package ph.edu.uplb.cs137.client.view;
 
 import ph.edu.uplb.cs137.client.CommonUtil;
 import ph.edu.uplb.cs137.client.Music;
+import ph.edu.uplb.cs137.client.Sprite;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -21,20 +22,26 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
     private Timer timer;
     private Music chosenMusic;
     private int currentMusicIndex;
+    private Sprite sprite;
+    private int swc=0, ctr, adj=0,dmg=0;
 
     public GamePanel(String serverName, String name){
         this.serverName = serverName;
         this.name = name;
         this.canPress = 0;
         //this.keyCatcher = new KeyCatcher();
-        this.timer = new Timer(5, this);
-        int[] arr = new int[3];
+        this.timer = new Timer(2, this);
+        int[] arr = new int[30];
         arr[0] = 600;
-        arr[1] = 850;
-        arr[2] = 1000;
+        //arr[1] = 850;
+        //arr[2] = 1000;
+        for(int i=1;i<30;i++){
+            arr[i]=arr[i-1]+150;
+        }
         //this.addKeyListener(keyCatcher);
         this.addKeyListener(this);
-        this.chosenMusic = new Music("music01.wav", "You and I Both", "Jason Mraz", "2003", 3, arr);
+        this.chosenMusic = new Music("music01.wav", "You and I Both", "Jason Mraz", "2003", 30, arr);
+        this.sprite=new Sprite();
         this.setPreferredSize(new Dimension(600, 500));
         this.timer.start();
         this.score = new int[this.chosenMusic.getNumMoves()];
@@ -43,20 +50,37 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
         }
         this.setVisible(true);
         this.setFocusable(true);
+        sprite.loadSprites();
     }
     public void paint(Graphics g){
         super.paint(g);
         g.setColor(new Color(225, 182, 80));
         g.fillRect(-1, 390, 600, 100);
         g.setColor(new Color(82, 189, 255));
-        g.fillRect(275, 390, 50, 100);
+        g.fillRect(100, 390, 50, 100);
         g.setColor(new Color(34, 37, 255));
-        g.fillRect(298, 390, 5, 100);
+        g.fillRect(123, 390, 5, 100);
+        g.setColor(new Color(255, 71, 54));
+        g.drawRect(105, 5, 170, 30);
+        g.drawRect(310+15, 5, 170, 30);
+        g.setColor(new Color(255, 3, 54));
+        g.fillRect(105, 5, 170, 30);
+        g.fillRect(315+10, 5, 170-dmg, 30);
         if(canPress!=0){
             g.setColor(new Color(255, 71, 54));
-            g.drawRect(275, 390, 50, 100);
+            g.drawRect(100, 390, 50, 100);
         }
+        g.drawImage(this.sprite.getSonicAvatar(), 500,5,this);
+        g.drawImage(this.sprite.getLuffyAvatar(), 0,5,this);
 
+        g.drawImage(this.sprite.getBufferedImageSonicArray()[this.sprite.getCurrSonic()], 310,177,this);
+        g.drawImage(this.sprite.getBufferedImageLuffyArray(swc)[this.sprite.getCurrLuffy()], 245,150+adj,this);
+        /*try{
+            g.drawImage(ImageIO.read(new File("resources/img/Sonic.png")).getSubimage(5, 2, 27, 35), 100,30,this);
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }*/
         try{
             for(int i=0;i<this.chosenMusic.getArrowList().size();i++){
                 g.drawImage(ImageIO.read(new File("resources/img/" + this.chosenMusic.getArrowList().get(i) + ".png")), this.chosenMusic.getxCoordinates()[i], 420, this);
@@ -71,9 +95,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 
     public void actionPerformed(ActionEvent e){
         if(e.getSource()==timer){
+            if(ctr%10==0) {
+                this.sprite.setCurrSonic((this.sprite.getCurrSonic() + 1) % 4);
+                this.sprite.setCurrLuffy((this.sprite.getCurrLuffy() + 1) % 4);
+                if (swc == 1 && ctr == 40){
+                    swc = 0;
+                    adj=0;
+                }
+            }
             for(int i=0;i<this.chosenMusic.getArrowList().size();i++){
                 this.chosenMusic.getxCoordinates()[i]--;
-                if(this.chosenMusic.getxCoordinates()[currentMusicIndex] < 275){
+                if(this.chosenMusic.getxCoordinates()[currentMusicIndex] < 100){
                     if(score[currentMusicIndex] == -1){
                         System.out.println("MISS");
                         score[currentMusicIndex] = 0;
@@ -83,6 +115,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                     }
                 }
             }
+            ctr++;
             repaint();
         }
     }
@@ -91,21 +124,45 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
         if(e.getKeyCode() == KeyEvent.VK_UP){
             if(canPress==1){
                 canPress=0;
+                swc=1;
+                ctr=0;
+                adj=13;
+                this.sprite.setCurrSonic(0);
+                this.sprite.setCurrLuffy(0);
+                dmg=(dmg+5)%170;
             }
         }
         else if(e.getKeyCode() == KeyEvent.VK_DOWN){
             if(canPress==2){
                 canPress=0;
+                swc=1;
+                ctr=0;
+                adj=13;
+                this.sprite.setCurrSonic(0);
+                this.sprite.setCurrLuffy(0);
+                dmg=(dmg+5)%170;
             }
         }
         else if(e.getKeyCode() == KeyEvent.VK_LEFT){
             if(canPress==3){
                 canPress=0;
+                swc=1;
+                ctr=0;
+                adj=13;
+                this.sprite.setCurrSonic(0);
+                this.sprite.setCurrLuffy(0);
+                dmg=(dmg+5)%170;
             }
         }
         else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
             if(canPress==4){
                 canPress=0;
+                swc=1;
+                ctr=0;
+                adj=13;
+                this.sprite.setCurrSonic(0);
+                this.sprite.setCurrLuffy(0);
+                dmg=(dmg+5)%170;
             }
         }
     }
