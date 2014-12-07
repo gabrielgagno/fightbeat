@@ -24,6 +24,8 @@ public class Sprite {
 
     private static BufferedImage mainImageSonic;
     private static BufferedImage mainImageLuffy;
+    private static BufferedImage mainImageSonicFlipped;
+    private static BufferedImage mainImageLuffyFlipped;
     private static BufferedImage sonicAvatar;
     private static BufferedImage luffyAvatar;
 
@@ -32,6 +34,13 @@ public class Sprite {
     private static BufferedImage[] sonicMiss;
     private static BufferedImage[] luffy;
     private static BufferedImage[] luffyPunch;
+
+    private static BufferedImage[] sonicFlipped;
+    private static BufferedImage[] sonicFlippedAttack;
+    private static BufferedImage[] luffyFlipped;
+    private static BufferedImage[] luffyFlippedHit;
+    private static BufferedImage[] luffyFlippedMiss;
+
 
     public BufferedImage getSonicAvatar(){
         return sonicAvatar;
@@ -58,6 +67,23 @@ public class Sprite {
             return luffyPunch;
     }
 
+    public BufferedImage[] getBufferedImageSonicFlippedArray(int swc){
+        if(swc==0)
+            return sonicFlipped;
+        else
+            return sonicFlippedAttack;
+    }
+
+    public BufferedImage[] getBufferedImageLuffyFlippedArray(int swc){
+        if(swc==0)
+            return luffyFlipped;
+        else if (swc==1)
+            return luffyFlippedHit;
+        else
+            return luffyFlippedMiss;
+
+    }
+
     public int getCurrSonic(){
         return currSonic;
     }
@@ -80,6 +106,9 @@ public class Sprite {
 
             mainImageSonic = ImageIO.read(new File("resources/img/Sonic.png"));
             mainImageLuffy = ImageIO.read(new File("resources/img/MonkeyDLuffy.png"));
+            mainImageSonicFlipped = ImageIO.read(new File("resources/img/SonicFlipped.png"));
+            mainImageLuffyFlipped = ImageIO.read(new File("resources/img/LuffyFlipped.png"));
+
             sonicAvatar = ImageIO.read(new File("resources/img/SonicAvatar.png"));
             luffyAvatar = ImageIO.read(new File("resources/img/LuffyAvatar.png"));
            // luffyAvatar = new BufferedImage(mainImageLuffy.getSubimage(1*widthLuffy+5, 17, widthLuffy, 23))
@@ -89,9 +118,13 @@ public class Sprite {
             sonicMiss = new BufferedImage[frameCount];
             luffy = new BufferedImage[frameCount];
             luffyPunch = new BufferedImage[frameCount];
-            //west = new BufferedImage[frameCount];
-            //north = new BufferedImage[frameCount];
-            //south = new BufferedImage[frameCount];
+
+            sonicFlipped = new BufferedImage[frameCount];
+            sonicFlippedAttack = new BufferedImage[frameCount];
+            luffyFlipped = new BufferedImage[frameCount];
+            luffyFlippedHit = new BufferedImage[frameCount];
+            luffyFlippedMiss = new BufferedImage[frameCount];
+
 
             /*for(int i=0; i<frameCount; i++){
                 sonic[i] = mainImageSonic.getSubimage(i*widthSonic+270, 168, widthSonic, heightSonic);
@@ -122,6 +155,22 @@ public class Sprite {
             }
             luffyPunch[2] = mainImageLuffy.getSubimage(2 * widthLuffy + 12, 95, 65, heightLuffy);
             luffyPunch[3] = mainImageLuffy.getSubimage(1*widthLuffy+5,95, widthLuffy, heightLuffy);
+
+            for(int i=0; i<frameCount-1; i++) {
+                sonicFlipped[i] = mainImageSonicFlipped.getSubimage(734-((1+i) * widthSonic), 2, widthSonic, heightSonic);
+            }
+            sonicFlipped[3] = mainImageSonicFlipped.getSubimage(734-(2 * widthSonic), 2, widthSonic, heightSonic);
+
+            for(int i=0; i<frameCount-1; i++){
+                luffyFlipped[i] = mainImageLuffyFlipped.getSubimage(767-((1+i)  *widthLuffy), 17, widthLuffy, heightLuffy);
+            }
+            luffyFlipped[3] = mainImageLuffyFlipped.getSubimage(767-(2*widthLuffy), 17, widthLuffy, heightLuffy);
+
+            for(int i=0; i<frameCount-1; i++) {
+                sonicFlippedAttack[i] = mainImageSonicFlipped.getSubimage(i * (620-583) + 583, 2326, 620-583, heightLuffy);
+            }
+            //sonicFlippedAttack[2] = mainImageSonicFlipped.getSubimage(2 * widthLuffy + 12, 95, 65, heightLuffy);
+            sonicFlippedAttack[3] = mainImageSonicFlipped.getSubimage(1*(620-583)+583 ,2326, 620-583, heightLuffy);
         }
         catch(Exception e){
             System.out.println("Spritesheet Not Found!");

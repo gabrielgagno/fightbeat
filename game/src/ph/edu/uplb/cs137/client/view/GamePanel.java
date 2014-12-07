@@ -26,7 +26,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
     private int currentMusicIndex;
     private Sprite sprite;
     private double mult=1;
-    private int swc=0, swc2=0, ctr, adj=0,dmg=0, hit=0, perfect=0, miss=0, combo=0;
+    private int swc=0, swc2=0, ctr, adj=0,dmg=0, hit=0, perfect=0, miss=0, combo=0, player=2;
     private ArrayList<NetPlayer> players;
     private NetPlayer player1 = new NetPlayer();
     private NetPlayer player2 = new NetPlayer();
@@ -79,14 +79,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
         Font font = new Font("Serif", Font.BOLD, 20);
         Font font2 = new Font("Serif", Font.BOLD, 25);
         g.setFont(font);
+        g.setColor(new Color(34, 37, 255));
         if(combo>2)
-            g.drawString("COMBO "+combo+"!", 220, 135);
+            g.drawString("COMBO "+combo+"!", 20, 135);
         if(combo>=10) {
-            g.drawString("MULTIPLIER x" + mult + "!", 170, 245);
+            g.drawString("MULTIPLIER x" + mult + "!", 20, 155);
         }
         if(hit==1){
             try {
-                g.drawImage(ImageIO.read(new File("resources/img/hit.png")), 300, 140, this);
+                g.drawImage(ImageIO.read(new File("resources/img/hit.png")), 300, 100, this);
             }
             catch(IOException e){
                 e.printStackTrace();
@@ -94,7 +95,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
         }
         else if(perfect==1){
             try {
-                g.drawImage(ImageIO.read(new File("resources/img/perfect.png")), 300, 140, this);
+                g.drawImage(ImageIO.read(new File("resources/img/perfect.png")), 300, 100, this);
             }
             catch(IOException e){
                 e.printStackTrace();
@@ -102,7 +103,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
         }
         else if(miss==1) {
             try {
-                g.drawImage(ImageIO.read(new File("resources/img/miss.png")), 300, 140, this);
+                g.drawImage(ImageIO.read(new File("resources/img/miss.png")), 300, 100, this);
             }
             catch(IOException e){
                 e.printStackTrace();
@@ -112,11 +113,22 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
             g.setColor(new Color(255, 71, 54));
             g.drawRect(100, 390, 50, 100);
         }
-        g.drawImage(this.sprite.getSonicAvatar(), 500,5,this);
-        g.drawImage(this.sprite.getLuffyAvatar(), 0,5,this);
+        if(player==1) {
+            g.drawImage(this.sprite.getSonicAvatar(), 500, 5, this);
+            g.drawImage(this.sprite.getLuffyAvatar(), 0, 5, this);
 
-        g.drawImage(this.sprite.getBufferedImageSonicArray(swc2)[this.sprite.getCurrSonic()], 310,177,this);
-        g.drawImage(this.sprite.getBufferedImageLuffyArray(swc)[this.sprite.getCurrLuffy()], 235,150+adj,this);
+            g.drawImage(this.sprite.getBufferedImageSonicArray(swc2)[this.sprite.getCurrSonic()], 310, 177, this);
+            g.drawImage(this.sprite.getBufferedImageLuffyArray(swc)[this.sprite.getCurrLuffy()], 235, 150 + adj, this);
+        }
+        else{
+            g.drawImage(this.sprite.getSonicAvatar(), 0, 5, this);
+            g.drawImage(this.sprite.getLuffyAvatar(), 500, 5, this);
+
+            g.drawImage(this.sprite.getBufferedImageSonicFlippedArray(swc)[this.sprite.getCurrSonic()], 235, 177-adj, this);
+            g.drawImage(this.sprite.getBufferedImageLuffyFlippedArray(0)[this.sprite.getCurrLuffy()], 310, 150, this);
+            //g.drawImage(this.sprite.getBufferedImageSonicArray(swc2)[this.sprite.getCurrSonic()], 310, 177, this);
+            //g.drawImage(this.sprite.getBufferedImageLuffyArray(swc)[this.sprite.getCurrLuffy()], 235, 150 + adj, this);
+        }
         /*try{
             g.drawImage(ImageIO.read(new File("resources/img/Sonic.png")).getSubimage(5, 2, 27, 35), 100,30,this);
         }
@@ -151,9 +163,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
             }
             for(int i=0;i<this.chosenMusic.getArrowList().size();i++){
                 this.chosenMusic.getxCoordinates()[i]--;
-                if(this.chosenMusic.getxCoordinates()[currentMusicIndex] < 100){
+                if(this.chosenMusic.getxCoordinates()[currentMusicIndex] < 80){
                     if(score[currentMusicIndex] == -1){
                         System.out.println("MISS");
+                        combo=0;
+                        mult=0;
                         score[currentMusicIndex] = 0;
                     }
                     if(currentMusicIndex+1<this.chosenMusic.getArrowList().size()){
