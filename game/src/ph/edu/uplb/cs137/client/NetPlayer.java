@@ -12,6 +12,7 @@ public class NetPlayer {
 	private int port;
 	private String name;
 	private String msg;
+    private int health=170;
 
 	public NetPlayer(String name,InetAddress address, int port){
 		this.address = address;
@@ -59,5 +60,13 @@ public class NetPlayer {
 		retval+=name+" ";
 		retval+=msg;
 		return retval;
-	}	
+	}
+
+    public void setHealth(int health){
+        this.health=health;
+    }
+
+    public int getHealth(){
+        return this.health;
+    }
 }

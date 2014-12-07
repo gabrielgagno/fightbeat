@@ -3,6 +3,7 @@ package ph.edu.uplb.cs137.client.view;
 import ph.edu.uplb.cs137.client.CommonUtil;
 import ph.edu.uplb.cs137.client.Music;
 import ph.edu.uplb.cs137.client.Sprite;
+import ph.edu.uplb.cs137.client.NetPlayer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,6 +11,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by Dell on 11/18/2014.
@@ -24,6 +26,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
     private int currentMusicIndex;
     private Sprite sprite;
     private int swc=0, ctr, adj=0,dmg=0;
+    private ArrayList<NetPlayer> players;
 
     public GamePanel(String serverName, String name){
         this.serverName = serverName;
@@ -51,6 +54,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
         this.setVisible(true);
         this.setFocusable(true);
         sprite.loadSprites();
+        players=new ArrayList<NetPlayer>(2);
     }
     public void paint(Graphics g){
         super.paint(g);
