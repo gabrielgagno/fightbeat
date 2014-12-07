@@ -25,7 +25,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
     private Music chosenMusic;
     private int currentMusicIndex;
     private Sprite sprite;
-    private int swc=0, ctr, adj=0,dmg=0, hit=0, perfect=0, miss=0;
+    private int swc=0, swc2=0, ctr, adj=0,dmg=0, hit=0, perfect=0, miss=0;
     private ArrayList<NetPlayer> players;
     private NetPlayer player1 = new NetPlayer();
     private NetPlayer player2 = new NetPlayer();
@@ -77,13 +77,25 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
         g.fillRect(315+10, 5, players.get(1).getHealth(), 30);
         Font font = new Font("Serif", Font.PLAIN, 14);
         g.setFont(font);
-        if(hit==1)
-            g.drawString("Hit!", 315, 160);
-        else if(perfect==1)
-            g.drawString("Perfect!", 315, 160);
+        if(hit==1){
+            try {
+                g.drawImage(ImageIO.read(new File("resources/img/hit.png")), 300, 140, this);
+            }
+            catch(IOException e){
+                e.printStackTrace();
+            }
+        }
+        else if(perfect==1){
+            try {
+                g.drawImage(ImageIO.read(new File("resources/img/perfect.png")), 300, 140, this);
+            }
+            catch(IOException e){
+                e.printStackTrace();
+            }
+        }
         else if(miss==1) {
             try {
-                g.drawImage(ImageIO.read(new File("resources/img/miss.png")), 315, 160, this);
+                g.drawImage(ImageIO.read(new File("resources/img/miss.png")), 300, 140, this);
             }
             catch(IOException e){
                 e.printStackTrace();
@@ -96,8 +108,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
         g.drawImage(this.sprite.getSonicAvatar(), 500,5,this);
         g.drawImage(this.sprite.getLuffyAvatar(), 0,5,this);
 
-        g.drawImage(this.sprite.getBufferedImageSonicArray(swc)[this.sprite.getCurrSonic()], 310,177,this);
-        g.drawImage(this.sprite.getBufferedImageLuffyArray(swc)[this.sprite.getCurrLuffy()], 245,150+adj,this);
+        g.drawImage(this.sprite.getBufferedImageSonicArray(swc2)[this.sprite.getCurrSonic()], 310,177,this);
+        g.drawImage(this.sprite.getBufferedImageLuffyArray(swc)[this.sprite.getCurrLuffy()], 235,150+adj,this);
         /*try{
             g.drawImage(ImageIO.read(new File("resources/img/Sonic.png")).getSubimage(5, 2, 27, 35), 100,30,this);
         }
@@ -123,6 +135,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                 this.sprite.setCurrLuffy((this.sprite.getCurrLuffy() + 1) % 4);
                 if (swc == 1 && ctr == 40){
                     swc = 0;
+                    swc2 = 0;
                     adj=0;
                     hit=0;
                     perfect=0;
@@ -209,9 +222,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                         players.get(1).setHealth(players.get(1).getHealth()-5);
                     //dmg=(dmg+5)%170;
                     this.chosenMusic.getxCoordinates()[currentMusicIndex]=this.chosenMusic.getxCoordinates()[currentMusicIndex]-200;
+                    swc2 = 1;
                 }
-                else
-                    miss=1;
+                else {
+                    miss = 1;
+                    swc2 = 2;
+                }
             }
             else if(e.getKeyCode() == KeyEvent.VK_DOWN){
                 System.out.println("DOWN!");
@@ -226,9 +242,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                         players.get(1).setHealth(players.get(1).getHealth()-5);
                     //dmg=(dmg+5)%170;
                     this.chosenMusic.getxCoordinates()[currentMusicIndex]=this.chosenMusic.getxCoordinates()[currentMusicIndex]-200;
+                    swc2 = 1;
                 }
-                else
-                    miss=1;
+                else {
+                    miss = 1;
+                    swc2 = 2;
+                }
             }
             else if(e.getKeyCode() == KeyEvent.VK_LEFT){
                 System.out.println("LEFT!");
@@ -243,9 +262,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                         players.get(1).setHealth(players.get(1).getHealth()-5);
                     //dmg=(dmg+5)%170;
                     this.chosenMusic.getxCoordinates()[currentMusicIndex]=this.chosenMusic.getxCoordinates()[currentMusicIndex]-200;
+                    swc2 = 1;
                 }
-                else
-                    miss=1;
+                else {
+                    miss = 1;
+                    swc2 = 2;
+                }
             }
             else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
                 System.out.println("RIGHT!");
@@ -261,9 +283,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                     //dmg=(dmg+5)%170;
                     this.chosenMusic.getxCoordinates()[currentMusicIndex]=this.chosenMusic.getxCoordinates()[currentMusicIndex]-200;
                     res=-1;
+                    swc2 = 1;
                 }
-                else
-                    miss=1;
+                else {
+                    miss = 1;
+                    swc2 = 2;
+                }
             }
         }
     }
