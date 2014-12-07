@@ -184,6 +184,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                 res = CommonUtil.checker(canPress, this.chosenMusic.getArrowList().get(currentMusicIndex), this.chosenMusic.getxCoordinates()[currentMusicIndex], this.score, currentMusicIndex);
                 if(res!=-1){
                     dmg=(dmg+5)%170;
+                    this.chosenMusic.getxCoordinates()[currentMusicIndex]=this.chosenMusic.getxCoordinates()[currentMusicIndex]-200;
                     res=-1;
                 }
             }
@@ -193,6 +194,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                 res = CommonUtil.checker(canPress, this.chosenMusic.getArrowList().get(currentMusicIndex), this.chosenMusic.getxCoordinates()[currentMusicIndex], this.score, currentMusicIndex);
                 if(res!=-1){
                     dmg=(dmg+5)%170;
+                    this.chosenMusic.getxCoordinates()[currentMusicIndex]=this.chosenMusic.getxCoordinates()[currentMusicIndex]-200;
                     res=-1;
                 }
             }
@@ -202,6 +204,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                 res = CommonUtil.checker(canPress, this.chosenMusic.getArrowList().get(currentMusicIndex), this.chosenMusic.getxCoordinates()[currentMusicIndex], this.score, currentMusicIndex);
                 if(res!=-1){
                     dmg=(dmg+5)%170;
+                    this.chosenMusic.getxCoordinates()[currentMusicIndex]=this.chosenMusic.getxCoordinates()[currentMusicIndex]-200;
                     res=-1;
                 }
             }
@@ -211,6 +214,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                 res = CommonUtil.checker(canPress, this.chosenMusic.getArrowList().get(currentMusicIndex), this.chosenMusic.getxCoordinates()[currentMusicIndex], this.score, currentMusicIndex);
                 if(res!=-1){
                     dmg=(dmg+5)%170;
+                    this.chosenMusic.getxCoordinates()[currentMusicIndex]=this.chosenMusic.getxCoordinates()[currentMusicIndex]-200;
                     res=-1;
                 }
             }
