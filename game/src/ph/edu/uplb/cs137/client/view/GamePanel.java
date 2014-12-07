@@ -25,7 +25,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
     private Music chosenMusic;
     private int currentMusicIndex;
     private Sprite sprite;
-    private int swc=0, swc2=0, ctr, adj=0,dmg=0, hit=0, perfect=0, miss=0;
+    private double mult=1;
+    private int swc=0, swc2=0, ctr, adj=0,dmg=0, hit=0, perfect=0, miss=0, combo=0;
     private ArrayList<NetPlayer> players;
     private NetPlayer player1 = new NetPlayer();
     private NetPlayer player2 = new NetPlayer();
@@ -75,8 +76,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
         g.setColor(new Color(255, 3, 54));
         g.fillRect(105, 5, players.get(0).getHealth(), 30);
         g.fillRect(315+10, 5, players.get(1).getHealth(), 30);
-        Font font = new Font("Serif", Font.PLAIN, 14);
+        Font font = new Font("Serif", Font.BOLD, 20);
+        Font font2 = new Font("Serif", Font.BOLD, 25);
         g.setFont(font);
+        if(combo>2)
+            g.drawString("COMBO "+combo+"!", 220, 135);
+        if(combo>=10) {
+            g.drawString("MULTIPLIER x" + mult + "!", 170, 245);
+        }
         if(hit==1){
             try {
                 g.drawImage(ImageIO.read(new File("resources/img/hit.png")), 300, 140, this);
@@ -219,14 +226,19 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                     else
                         perfect=1;
                     if(players.get(1).getHealth()!=0)
-                        players.get(1).setHealth(players.get(1).getHealth()-5);
+                        players.get(1).setHealth(players.get(1).getHealth()-(res+(combo/10)));
                     //dmg=(dmg+5)%170;
                     this.chosenMusic.getxCoordinates()[currentMusicIndex]=this.chosenMusic.getxCoordinates()[currentMusicIndex]-200;
                     swc2 = 1;
+                    combo++;
+                    if(combo%10==0)
+                        mult+=0.5;
                 }
                 else {
                     miss = 1;
                     swc2 = 2;
+                    combo=0;
+                    mult=0;
                 }
             }
             else if(e.getKeyCode() == KeyEvent.VK_DOWN){
@@ -239,14 +251,19 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                     else
                         perfect=1;
                     if(players.get(1).getHealth()!=0)
-                        players.get(1).setHealth(players.get(1).getHealth()-5);
+                        players.get(1).setHealth(players.get(1).getHealth()-(res+(combo/10)));
                     //dmg=(dmg+5)%170;
                     this.chosenMusic.getxCoordinates()[currentMusicIndex]=this.chosenMusic.getxCoordinates()[currentMusicIndex]-200;
                     swc2 = 1;
+                    combo++;
+                    if(combo%10==0)
+                        mult+=0.5;
                 }
                 else {
                     miss = 1;
                     swc2 = 2;
+                    combo=0;
+                    mult=0;
                 }
             }
             else if(e.getKeyCode() == KeyEvent.VK_LEFT){
@@ -259,14 +276,19 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                     else
                         perfect=1;
                     if(players.get(1).getHealth()!=0)
-                        players.get(1).setHealth(players.get(1).getHealth()-5);
+                        players.get(1).setHealth(players.get(1).getHealth()-(res+(combo/10)));
                     //dmg=(dmg+5)%170;
                     this.chosenMusic.getxCoordinates()[currentMusicIndex]=this.chosenMusic.getxCoordinates()[currentMusicIndex]-200;
                     swc2 = 1;
+                    combo++;
+                    if(combo%10==0)
+                        mult+=0.5;
                 }
                 else {
                     miss = 1;
                     swc2 = 2;
+                    combo=0;
+                    mult=0;
                 }
             }
             else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
@@ -279,15 +301,20 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                     else
                         perfect=1;
                     if(players.get(1).getHealth()!=0)
-                        players.get(1).setHealth(players.get(1).getHealth()-5);
+                        players.get(1).setHealth(players.get(1).getHealth()-(res+(combo/10)));
                     //dmg=(dmg+5)%170;
                     this.chosenMusic.getxCoordinates()[currentMusicIndex]=this.chosenMusic.getxCoordinates()[currentMusicIndex]-200;
                     res=-1;
                     swc2 = 1;
+                    combo++;
+                    if(combo%10==0)
+                        mult+=0.5;
                 }
                 else {
                     miss = 1;
                     swc2 = 2;
+                    combo=0;
+                    mult=0;
                 }
             }
         }
