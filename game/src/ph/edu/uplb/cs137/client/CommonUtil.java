@@ -10,6 +10,8 @@ import java.util.Random;
  */
 public abstract class CommonUtil {
 
+    private static boolean[] check = new boolean[30];
+
     private static String[] directionsList = {"up", "down", "left", "right"};
 
     public static int randomize(){
@@ -33,20 +35,22 @@ public abstract class CommonUtil {
             //this is miss by pressing at the wrong place
         }
         else{
-            if(key-1==x.indexOf(shouldPressString)){
+            if(key-1==x.indexOf(shouldPressString) && check[currMusicIndex]==false){
                 if(xCoordinate > 123 && xCoordinate < 128){
                     //this is perfect
                     System.out.println("PERFECT!");
                     score[currMusicIndex] = 5;
+                    check[currMusicIndex]=true;
                     return 2;
             }
                 else{
                     score[currMusicIndex] = 3;
                     System.out.println("HIT!");
+                    check[currMusicIndex]=true;
                     return 1;
                     //this is awesome
                 }
-                }
+            }
             else{
                 //this is miss by pressing the wrong key
                 score[currMusicIndex] = 0;
