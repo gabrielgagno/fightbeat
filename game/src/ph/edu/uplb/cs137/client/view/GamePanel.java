@@ -25,7 +25,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
     private Music chosenMusic;
     private int currentMusicIndex;
     private Sprite sprite;
-    private int swc=0, ctr, adj=0,dmg=0, hit=0;
+    private int swc=0, ctr, adj=0,dmg=0, hit=0, perfect=0, miss=0;
     private ArrayList<NetPlayer> players;
     private NetPlayer player1 = new NetPlayer();
     private NetPlayer player2 = new NetPlayer();
@@ -75,6 +75,20 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
         g.setColor(new Color(255, 3, 54));
         g.fillRect(105, 5, players.get(0).getHealth(), 30);
         g.fillRect(315+10, 5, players.get(1).getHealth(), 30);
+        Font font = new Font("Serif", Font.PLAIN, 14);
+        g.setFont(font);
+        if(hit==1)
+            g.drawString("Hit!", 315, 160);
+        else if(perfect==1)
+            g.drawString("Perfect!", 315, 160);
+        else if(miss==1) {
+            try {
+                g.drawImage(ImageIO.read(new File("resources/img/miss.png")), 315, 160, this);
+            }
+            catch(IOException e){
+                e.printStackTrace();
+            }
+        }
         if(canPress!=0){
             g.setColor(new Color(255, 71, 54));
             g.drawRect(100, 390, 50, 100);
@@ -82,7 +96,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
         g.drawImage(this.sprite.getSonicAvatar(), 500,5,this);
         g.drawImage(this.sprite.getLuffyAvatar(), 0,5,this);
 
-        g.drawImage(this.sprite.getBufferedImageSonicArray()[this.sprite.getCurrSonic()], 310,177,this);
+        g.drawImage(this.sprite.getBufferedImageSonicArray(swc)[this.sprite.getCurrSonic()], 310,177,this);
         g.drawImage(this.sprite.getBufferedImageLuffyArray(swc)[this.sprite.getCurrLuffy()], 245,150+adj,this);
         /*try{
             g.drawImage(ImageIO.read(new File("resources/img/Sonic.png")).getSubimage(5, 2, 27, 35), 100,30,this);
@@ -110,6 +124,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                 if (swc == 1 && ctr == 40){
                     swc = 0;
                     adj=0;
+                    hit=0;
+                    perfect=0;
+                    miss=0;
                 }
             }
             for(int i=0;i<this.chosenMusic.getArrowList().size();i++){
@@ -184,49 +201,69 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                 canPress = 1;
                 res = CommonUtil.checker(canPress, this.chosenMusic.getArrowList().get(currentMusicIndex), this.chosenMusic.getxCoordinates()[currentMusicIndex], this.score, currentMusicIndex);
                 if(res!=-1){
-                    hit=1;
+                    if(res==1)
+                        hit=1;
+                    else
+                        perfect=1;
                     if(players.get(1).getHealth()!=0)
                         players.get(1).setHealth(players.get(1).getHealth()-5);
                     //dmg=(dmg+5)%170;
                     this.chosenMusic.getxCoordinates()[currentMusicIndex]=this.chosenMusic.getxCoordinates()[currentMusicIndex]-200;
                 }
+                else
+                    miss=1;
             }
             else if(e.getKeyCode() == KeyEvent.VK_DOWN){
                 System.out.println("DOWN!");
                 canPress = 2;
                 res = CommonUtil.checker(canPress, this.chosenMusic.getArrowList().get(currentMusicIndex), this.chosenMusic.getxCoordinates()[currentMusicIndex], this.score, currentMusicIndex);
                 if(res!=-1){
-                    hit=1;
+                    if(res==1)
+                        hit=1;
+                    else
+                        perfect=1;
                     if(players.get(1).getHealth()!=0)
                         players.get(1).setHealth(players.get(1).getHealth()-5);
                     //dmg=(dmg+5)%170;
                     this.chosenMusic.getxCoordinates()[currentMusicIndex]=this.chosenMusic.getxCoordinates()[currentMusicIndex]-200;
                 }
+                else
+                    miss=1;
             }
             else if(e.getKeyCode() == KeyEvent.VK_LEFT){
                 System.out.println("LEFT!");
                 canPress = 3;
                 res = CommonUtil.checker(canPress, this.chosenMusic.getArrowList().get(currentMusicIndex), this.chosenMusic.getxCoordinates()[currentMusicIndex], this.score, currentMusicIndex);
                 if(res!=-1){
-                    hit=1;
+                    if(res==1)
+                        hit=1;
+                    else
+                        perfect=1;
                     if(players.get(1).getHealth()!=0)
                         players.get(1).setHealth(players.get(1).getHealth()-5);
                     //dmg=(dmg+5)%170;
                     this.chosenMusic.getxCoordinates()[currentMusicIndex]=this.chosenMusic.getxCoordinates()[currentMusicIndex]-200;
                 }
+                else
+                    miss=1;
             }
             else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
                 System.out.println("RIGHT!");
                 canPress = 4;
                 res = CommonUtil.checker(canPress, this.chosenMusic.getArrowList().get(currentMusicIndex), this.chosenMusic.getxCoordinates()[currentMusicIndex], this.score, currentMusicIndex);
                 if(res!=-1){
-                    hit=1;
+                    if(res==1)
+                        hit=1;
+                    else
+                        perfect=1;
                     if(players.get(1).getHealth()!=0)
                         players.get(1).setHealth(players.get(1).getHealth()-5);
                     //dmg=(dmg+5)%170;
                     this.chosenMusic.getxCoordinates()[currentMusicIndex]=this.chosenMusic.getxCoordinates()[currentMusicIndex]-200;
                     res=-1;
                 }
+                else
+                    miss=1;
             }
         }
     }

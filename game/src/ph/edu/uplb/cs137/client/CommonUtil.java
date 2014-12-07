@@ -28,7 +28,7 @@ public abstract class CommonUtil {
 
     public static int checker(int key, String shouldPressString, int xCoordinate, int[] score, int currMusicIndex){
         List<String> x = Arrays.asList(directionsList);
-        if(xCoordinate<90 || xCoordinate > 100 + 60){
+        if(xCoordinate<80 || xCoordinate > 100 + 50){
             System.out.println("MISSED");
             score[currMusicIndex] = 0;
             return -1;
@@ -36,7 +36,7 @@ public abstract class CommonUtil {
         }
         else{
             if(key-1==x.indexOf(shouldPressString) && check[currMusicIndex]==false){
-                if(xCoordinate > 123 && xCoordinate < 128){
+                if(xCoordinate > 120 && xCoordinate < 130){
                     //this is perfect
                     System.out.println("PERFECT!");
                     score[currMusicIndex] = 5;

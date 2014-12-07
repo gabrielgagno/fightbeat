@@ -28,6 +28,7 @@ public class Sprite {
     private static BufferedImage luffyAvatar;
 
     private static BufferedImage[] sonic;
+    private static BufferedImage[] sonicHit;
     private static BufferedImage[] luffy;
     private static BufferedImage[] luffyPunch;
 
@@ -40,8 +41,11 @@ public class Sprite {
         //return new ImageIcon(Toolkit.getDefaultToolkit().createImage(sonic[0].getSource()));
     }
 
-    public BufferedImage[] getBufferedImageSonicArray(){
-        return sonic;
+    public BufferedImage[] getBufferedImageSonicArray(int swc){
+        if(swc==0)
+            return sonic;
+        else
+            return sonicHit;
     }
 
     public BufferedImage[] getBufferedImageLuffyArray(int swc){
@@ -78,6 +82,7 @@ public class Sprite {
            // luffyAvatar = new BufferedImage(mainImageLuffy.getSubimage(1*widthLuffy+5, 17, widthLuffy, 23))
 
             sonic = new BufferedImage[frameCount];
+            sonicHit = new BufferedImage[frameCount];
             luffy = new BufferedImage[frameCount];
             luffyPunch = new BufferedImage[frameCount];
             //west = new BufferedImage[frameCount];
@@ -92,6 +97,11 @@ public class Sprite {
                 sonic[i] = mainImageSonic.getSubimage(i * widthSonic + 4, 2, widthSonic, heightSonic);
             }
             sonic[3] = mainImageSonic.getSubimage(1 * widthSonic + 4, 2, widthSonic, heightSonic);
+
+            for(int i=0; i<frameCount-1; i++){
+                sonicHit[i] = mainImageSonic.getSubimage(i*widthLuffy+5, 500, widthLuffy, heightSonic+2);
+            }
+            sonicHit[3] = mainImageSonic.getSubimage(1*widthLuffy+5, 500, widthLuffy, heightSonic+2);
 
             for(int i=0; i<frameCount-1; i++){
                 luffy[i] = mainImageLuffy.getSubimage(i*widthLuffy+5, 17, widthLuffy, heightLuffy);
