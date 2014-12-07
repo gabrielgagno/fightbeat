@@ -14,6 +14,9 @@ public class NetPlayer {
 	private String msg;
     private int health=170;
 
+    public NetPlayer(){
+    }
+
 	public NetPlayer(String name,InetAddress address, int port){
 		this.address = address;
 		this.port = port;

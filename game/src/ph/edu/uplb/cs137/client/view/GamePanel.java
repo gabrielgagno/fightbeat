@@ -25,8 +25,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
     private Music chosenMusic;
     private int currentMusicIndex;
     private Sprite sprite;
-    private int swc=0, ctr, adj=0,dmg=0;
+    private int swc=0, ctr, adj=0,dmg=0, hit=0;
     private ArrayList<NetPlayer> players;
+    private NetPlayer player1 = new NetPlayer();
+    private NetPlayer player2 = new NetPlayer();
 
     public GamePanel(String serverName, String name){
         this.serverName = serverName;
@@ -55,6 +57,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
         this.setFocusable(true);
         sprite.loadSprites();
         players=new ArrayList<NetPlayer>(2);
+        players.add(player1);
+        players.add(player2);
+
     }
     public void paint(Graphics g){
         super.paint(g);
@@ -68,8 +73,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
         g.drawRect(105, 5, 170, 30);
         g.drawRect(310+15, 5, 170, 30);
         g.setColor(new Color(255, 3, 54));
-        g.fillRect(105, 5, 170, 30);
-        g.fillRect(315+10, 5, 170-dmg, 30);
+        g.fillRect(105, 5, players.get(0).getHealth(), 30);
+        g.fillRect(315+10, 5, players.get(1).getHealth(), 30);
         if(canPress!=0){
             g.setColor(new Color(255, 71, 54));
             g.drawRect(100, 390, 50, 100);
@@ -133,7 +138,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                 adj=13;
                 this.sprite.setCurrSonic(0);
                 this.sprite.setCurrLuffy(0);
-                //dmg=(dmg+5)%170;
             }
         }
         else if(e.getKeyCode() == KeyEvent.VK_DOWN){
@@ -144,7 +148,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                 adj=13;
                 this.sprite.setCurrSonic(0);
                 this.sprite.setCurrLuffy(0);
-                //dmg=(dmg+5)%170;
             }
         }
         else if(e.getKeyCode() == KeyEvent.VK_LEFT){
@@ -155,7 +158,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                 adj=13;
                 this.sprite.setCurrSonic(0);
                 this.sprite.setCurrLuffy(0);
-                //dmg=(dmg+5)%170;
             }
         }
         else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
@@ -166,7 +168,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                 adj=13;
                 this.sprite.setCurrSonic(0);
                 this.sprite.setCurrLuffy(0);
-
             }
         }
     }
@@ -183,9 +184,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                 canPress = 1;
                 res = CommonUtil.checker(canPress, this.chosenMusic.getArrowList().get(currentMusicIndex), this.chosenMusic.getxCoordinates()[currentMusicIndex], this.score, currentMusicIndex);
                 if(res!=-1){
-                    dmg=(dmg+5)%170;
+                    hit=1;
+                    if(players.get(1).getHealth()!=0)
+                        players.get(1).setHealth(players.get(1).getHealth()-5);
+                    //dmg=(dmg+5)%170;
                     this.chosenMusic.getxCoordinates()[currentMusicIndex]=this.chosenMusic.getxCoordinates()[currentMusicIndex]-200;
-                    res=-1;
                 }
             }
             else if(e.getKeyCode() == KeyEvent.VK_DOWN){
@@ -193,9 +196,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                 canPress = 2;
                 res = CommonUtil.checker(canPress, this.chosenMusic.getArrowList().get(currentMusicIndex), this.chosenMusic.getxCoordinates()[currentMusicIndex], this.score, currentMusicIndex);
                 if(res!=-1){
-                    dmg=(dmg+5)%170;
+                    hit=1;
+                    if(players.get(1).getHealth()!=0)
+                        players.get(1).setHealth(players.get(1).getHealth()-5);
+                    //dmg=(dmg+5)%170;
                     this.chosenMusic.getxCoordinates()[currentMusicIndex]=this.chosenMusic.getxCoordinates()[currentMusicIndex]-200;
-                    res=-1;
                 }
             }
             else if(e.getKeyCode() == KeyEvent.VK_LEFT){
@@ -203,9 +208,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                 canPress = 3;
                 res = CommonUtil.checker(canPress, this.chosenMusic.getArrowList().get(currentMusicIndex), this.chosenMusic.getxCoordinates()[currentMusicIndex], this.score, currentMusicIndex);
                 if(res!=-1){
-                    dmg=(dmg+5)%170;
+                    hit=1;
+                    if(players.get(1).getHealth()!=0)
+                        players.get(1).setHealth(players.get(1).getHealth()-5);
+                    //dmg=(dmg+5)%170;
                     this.chosenMusic.getxCoordinates()[currentMusicIndex]=this.chosenMusic.getxCoordinates()[currentMusicIndex]-200;
-                    res=-1;
                 }
             }
             else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
@@ -213,7 +220,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
                 canPress = 4;
                 res = CommonUtil.checker(canPress, this.chosenMusic.getArrowList().get(currentMusicIndex), this.chosenMusic.getxCoordinates()[currentMusicIndex], this.score, currentMusicIndex);
                 if(res!=-1){
-                    dmg=(dmg+5)%170;
+                    hit=1;
+                    if(players.get(1).getHealth()!=0)
+                        players.get(1).setHealth(players.get(1).getHealth()-5);
+                    //dmg=(dmg+5)%170;
                     this.chosenMusic.getxCoordinates()[currentMusicIndex]=this.chosenMusic.getxCoordinates()[currentMusicIndex]-200;
                     res=-1;
                 }
